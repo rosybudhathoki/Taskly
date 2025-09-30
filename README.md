@@ -3,7 +3,7 @@ Overview
 
 Taskly is a delightful web-based to-do list application that helps you stay organized while making task management enjoyable. With interactive animations, customizable themes, integrated clock, and stopwatch. Taskly helps you track daily tasks and manage your time efficiently.
 
-Live Demo
+Live Demo -> https://rosybudhathoki.github.io/Taskly/
 
 Check out the live version of the project here: Taskly
 
