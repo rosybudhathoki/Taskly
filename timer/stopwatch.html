@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stopwatch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.css" />
+    <style>
+        body {
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            background-color: #6296f0;
+        }
+
+        
+        *, *::before, *::after {
+            box-sizing: inherit;
+        }
+
+        
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; 
+        }
+        
+        #stopwatch-section {
+            position: absolute; 
+            top: 40%;
+            left: 50%; 
+            transform: translate(-50%, -40%); 
+        }
+
+        #timer{
+            font-family: 'Poppins', sans-serif;
+            font-size:5em;
+            font-weight:100;
+        }
+  
+        button{
+            display: inline-block; 
+            background: rgb(0, 0, 0); 
+            color: white; 
+            font-size: 1.25rem; 
+            padding: 15px 30px; 
+            border: none; 
+            border-radius: 10px; 
+            text-decoration: none; 
+            text-align: center; 
+            cursor: pointer; 
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+
+        button:hover{
+            background: linear-gradient(90deg, #ff5722, #ff7f50); 
+            transform: scale(1.05); 
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="main-content" id="clock-section">
+            <div class="main-content" id="stopwatch-section">
+                <div id="timer"></div>
+            </div>
+            <button id="toggle">Start</button>
+            <button id="reset">Reset</button>
+    </main>
+
+    <script>
+        var timer = document.getElementById("timer");
+        var toggleBtn = document.getElementById("toggle");
+        var resetBtn = document.getElementById("reset");
+
+        var watch = new Stopwatch(timer);
+
+        toggleBtn.addEventListener("click", function () {
+        if (watch.isOn) {
+            watch.stop();
+            toggleBtn.textContent = "Start";
+        } else {
+            watch.start();
+            toggleBtn.textContent = "Stop";
+        }
+        });
+
+        resetBtn.addEventListener("click", function () {
+        watch.reset();
+        });
+
+        function Stopwatch(elem) {
+        var time = 0; 
+        var interval;
+        var offset;
+
+        function update() {
+            if (this.isOn) {
+            time += delta(); 
+            }
+            var formattedTime = timeFormatter(time); 
+            elem.innerHTML = formattedTime; 
+        }
+
+        function delta() {
+            var now = Date.now();
+            var timePassed = now - offset;
+            offset = now;
+            return timePassed; 
+        }
+
+        function timeFormatter(timeInMilliseconds) {
+            // Calculate minutes, seconds, and milliseconds
+            var totalSeconds = Math.floor(timeInMilliseconds / 1000);
+            var minutes = Math.floor(totalSeconds / 60);
+            var seconds = totalSeconds % 60;
+            var milliseconds = timeInMilliseconds % 1000;
+
+            // Format the time with leading zeros
+            if (minutes < 10) {
+            minutes = "0" + minutes;
+            }
+            if (seconds < 10) {
+            seconds = "0" + seconds;
+            }
+            milliseconds = Math.floor(milliseconds / 10); 
+            if (milliseconds < 10) {
+            milliseconds = "0" + milliseconds;
+            }
+
+            return minutes + ":" + seconds + "." + milliseconds; 
+        }
+
+        this.isOn = false; 
+        this.start = function () {
+            if (!this.isOn) {
+            interval = setInterval(update.bind(this), 10); 
+            offset = Date.now();
+            this.isOn = true; 
+            }
+        };
+        
+        this.stop = function () {
+            if (this.isOn) {
+            clearInterval(interval); 
+            interval = null;
+            this.isOn = false; 
+            }
+        };
+        
+        this.reset = function () {
+            if (!this.isOn) {
+            time = 0; 
+            update(); 
+            }
+        };
+        }
+        </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.min.js"></script>
+</body>
+</html>

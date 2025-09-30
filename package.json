@@ -1,0 +1,13 @@
+{
+  "name": "cute-do",
+  "version": "1.0.0",
+  "description": "Taskly is a delightful web-based to-do list app with themes, a clock, and stopwatch to make managing tasks fun and engaging.",
+  "main": "index.js",
+  "scripts": {
+    "start": "index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["todo", "productivity", "tasks"],
+  "author": "Rosy Budhathoki",
+  "license": "ISC"
+}
